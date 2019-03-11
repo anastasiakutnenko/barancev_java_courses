@@ -10,7 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class AddNewContactTests {
     private WebDriver wd;
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -24,7 +24,7 @@ public class AddNewContactTests {
         wd.findElement(By.name("pass")).click();
         wd.findElement(By.name("pass")).clear();
         wd.findElement(By.name("pass")).sendKeys(password);
-        wd.findElement(By.xpath("/html/body/div/div[4]/form/input[3]")).click();
+        wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
     @Test
@@ -32,7 +32,7 @@ public class AddNewContactTests {
         goToContactCreationPage();
         fillContactCreationForm(new ContactData("Anastasia", "Kutnenko", "Shevchenka 100", "111-111-111", "0923456789", "222-222-222", "333-333-333", "anastasya.kutnenko+1@gmail.com", "anastasya.kutnenko+2@gmail.com", "anastasya.kutnenko+3@gmail.com"));
         submitContactCreationForm();
-        wd.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]")).click();
+        wd.findElement(By.xpath("//input[@name='submit']")).click();
     }
 
     private void submitContactCreationForm() {
@@ -77,7 +77,7 @@ public class AddNewContactTests {
         wd.findElement(By.linkText("add new")).click();
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
         wd.quit();
     }
