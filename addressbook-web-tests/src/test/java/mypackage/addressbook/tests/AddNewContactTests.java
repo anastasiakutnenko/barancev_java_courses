@@ -1,7 +1,8 @@
-package mypackage.addressbook;
+package mypackage.addressbook.tests;
 
 import java.util.concurrent.TimeUnit;
 
+import mypackage.addressbook.model.ContactData;
 import org.testng.annotations.*;
 
 import org.openqa.selenium.*;
@@ -81,23 +82,4 @@ public class AddNewContactTests {
     public void tearDown() throws Exception {
         wd.quit();
     }
-
-    private boolean isElementPresent(By by) {
-        try {
-            wd.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    private boolean isAlertPresent() {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
 }

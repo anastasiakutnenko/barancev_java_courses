@@ -1,4 +1,4 @@
-package mypackage.addressbook;
+package mypackage.addressbook.model;
 
 public class ContactData {
     private final String firstName;
