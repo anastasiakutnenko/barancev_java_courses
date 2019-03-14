@@ -26,4 +26,24 @@ public class ContactsHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
     }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteContact() {
+        click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void clickEditIcon() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void clickUpdateContactButton() {
+        click(By.xpath("(//input[@name='update'])"));
+    }
+
+    public void returnToHomePage() {
+        click(By.linkText("home page"));
+    }
 }
