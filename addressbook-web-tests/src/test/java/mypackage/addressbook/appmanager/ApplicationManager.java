@@ -29,7 +29,7 @@ public class ApplicationManager {
         } else if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
         }
-        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
