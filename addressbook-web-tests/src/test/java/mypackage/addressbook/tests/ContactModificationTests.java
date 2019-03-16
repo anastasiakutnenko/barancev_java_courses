@@ -18,7 +18,7 @@ public class ContactModificationTests extends TestBase {
                     "333-333-333", "anastasya.kutnenko+1@gmail.com",
                     "anastasya.kutnenko+2@gmail.com", "anastasya.kutnenko+3@gmail.com"));
         }
-        app.getContactsHelper().selectContact();
+        app.getContactsHelper().selectContact(before - 1);
         app.getContactsHelper().clickEditIcon();
         app.getContactsHelper().fillContactCreationForm(new ContactData(
                 "Anastasia updated", "Kutnenko updated",
