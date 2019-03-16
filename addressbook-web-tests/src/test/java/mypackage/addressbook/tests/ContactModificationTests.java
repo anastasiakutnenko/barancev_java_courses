@@ -1,12 +1,14 @@
 package mypackage.addressbook.tests;
 
 import mypackage.addressbook.model.ContactData;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         app.getNavigationHelper().goToHomePage();
+        int before = app.getContactsHelper().countContacts();
         if (!app.getContactsHelper().isThereAContact()) {
             app.getNavigationHelper().goToContactCreationPage();
             app.getContactsHelper().createContact(new ContactData(
@@ -26,5 +28,7 @@ public class ContactModificationTests extends TestBase {
                 "anastasya.kutnenko+2@gmail.com updated", "anastasya.kutnenko+3@gmail.com updated"));
         app.getContactsHelper().clickUpdateContactButton();
         app.getContactsHelper().returnToHomePage();
+        int after = app.getContactsHelper().countContacts();
+        Assert.assertEquals(after, before);
     }
 }
