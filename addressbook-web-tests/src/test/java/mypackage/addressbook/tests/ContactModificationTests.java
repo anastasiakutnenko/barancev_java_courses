@@ -4,11 +4,12 @@ import mypackage.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         app.getNavigationHelper().goToHomePage();
-        int before = app.getContactsHelper().countContacts();
         if (!app.getContactsHelper().isThereAContact()) {
             app.getNavigationHelper().goToContactCreationPage();
             app.getContactsHelper().createContact(new ContactData(
@@ -18,7 +19,8 @@ public class ContactModificationTests extends TestBase {
                     "333-333-333", "anastasya.kutnenko+1@gmail.com",
                     "anastasya.kutnenko+2@gmail.com", "anastasya.kutnenko+3@gmail.com"));
         }
-        app.getContactsHelper().selectContact(before - 1);
+        List<ContactData> before = app.getContactsHelper().getContactList();
+        app.getContactsHelper().selectContact(before.size() - 1);
         app.getContactsHelper().clickEditIcon();
         app.getContactsHelper().fillContactCreationForm(new ContactData(
                 "Anastasia updated", "Kutnenko updated",
@@ -28,7 +30,7 @@ public class ContactModificationTests extends TestBase {
                 "anastasya.kutnenko+2@gmail.com updated", "anastasya.kutnenko+3@gmail.com updated"));
         app.getContactsHelper().clickUpdateContactButton();
         app.getContactsHelper().returnToHomePage();
-        int after = app.getContactsHelper().countContacts();
-        Assert.assertEquals(after, before);
+        List<ContactData> after = app.getContactsHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size());
     }
 }
