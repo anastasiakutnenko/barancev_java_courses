@@ -71,7 +71,7 @@ public class ContactsHelper extends HelperBase {
         for(int i = 0; i < row.size(); i++) {
                 String lastName = cell.get(1).getText();
                 String firstName = cell.get(2).getText();
-                String id = row.get(i).findElement(By.tagName("input")).getAttribute("value");
+                int id = Integer.parseInt(row.get(i).findElement(By.tagName("input")).getAttribute("value"));
                 ContactData contact = new ContactData(id, firstName, lastName,
                         null, null,
                         null, null,
