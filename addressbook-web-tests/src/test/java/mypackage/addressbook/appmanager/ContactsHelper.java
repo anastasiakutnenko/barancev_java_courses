@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactsHelper extends HelperBase {
 
@@ -33,8 +35,8 @@ public class ContactsHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmail3());
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
     }
 
     public void deleteContact() {
@@ -58,16 +60,16 @@ public class ContactsHelper extends HelperBase {
         submitContactCreationForm();
     }
 
-    public void modify(ContactData contact, int index) {
-        selectContact(index);
+    public void modify(ContactData contact) {
+        selectContactById(contact.getId());
         clickEditIcon();
         fillContactCreationForm(contact);
         clickUpdateContactButton();
         returnToHomePage();
     }
 
-    public void delete(int index) {
-        selectContact(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteContact();
         getNavigationHelper.acceptBrowserAlert();
         getNavigationHelper.homePage();
@@ -81,35 +83,35 @@ public class ContactsHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
         List<WebElement> row = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
         List<WebElement> cell = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']/td")));
         for(int i = 0; i < row.size(); i++) {
-                String lastName = cell.get(1).getText();
-                String firstName = cell.get(2).getText();
-                String address = cell.get(3).getText();
-                String[] emails = cell.get(4).getText().split("\n");
-                String[] phones = cell.get(5).getText().split("\n");
-                int id = Integer.parseInt(row.get(i).findElement(By.tagName("input")).getAttribute("value"));
-                ContactData contact = new ContactData()
-                        .withId(id)
-                        .withFirstName(firstName)
-                        .withLastName(lastName);
+            String lastName = cell.get(1).getText();
+            String firstName = cell.get(2).getText();
+            String address = cell.get(3).getText();
+            String[] emails = cell.get(4).getText().split("\n");
+            String[] phones = cell.get(5).getText().split("\n");
+            int id = Integer.parseInt(row.get(i).findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData()
+                    .withId(id)
+                    .withFirstName(firstName)
+                    .withLastName(lastName);
 
-                ContactData contactFullInfo = new ContactData()
-                        .withId(id)
-                        .withFirstName(firstName)
-                        .withLastName(lastName)
-                        .withAddress(address)
-                        .withHomePhone(phones[0])
-                        .withMobilePhone(phones[1])
-                        .withWorkPhone(phones[2])
-                        .withEmail1(emails[0])
-                        .withEmail2(emails[1])
-                        .withEmail3(emails[2]);
-                contacts.add(contact);
-            }
+            ContactData contactFullInfo = new ContactData()
+                    .withId(id)
+                    .withFirstName(firstName)
+                    .withLastName(lastName)
+                    .withAddress(address)
+                    .withHomePhone(phones[0])
+                    .withMobilePhone(phones[1])
+                    .withWorkPhone(phones[2])
+                    .withEmail1(emails[0])
+                    .withEmail2(emails[1])
+                    .withEmail3(emails[2]);
+            contacts.add(contact);
+        }
         return contacts;
     }
 }

@@ -4,14 +4,13 @@ import mypackage.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class AddNewContactTests extends TestBase {
 
     @Test
     public void addNewContactTest() throws Exception {
-        List<ContactData> before = app.contact().list();
+        Set<ContactData> before = app.contact().all();
         ContactData contact = new ContactData()
                 .withFirstName("Anastasia").withLastName("Kutnenko")
                 .withAddress("Shevchenka 100").withHomePhone("111-111-111")
@@ -22,13 +21,10 @@ public class AddNewContactTests extends TestBase {
         app.goTo().contactCreationPage();
         app.contact().create(contact);
         app.goTo().homePage();
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size() + 1);
-        contact.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
+        contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
         before.add(contact);
-        Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-        before.sort(byId);
-        after.sort(byId);
-        Assert.assertEquals(after, before);
+        Assert.assertEquals(before, after);
     }
 }
