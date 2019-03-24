@@ -11,17 +11,17 @@ public class AddNewContactTests extends TestBase {
 
     @Test
     public void addNewContactTest() throws Exception {
-        List<ContactData> before = app.getContactsHelper().getContactList();
+        List<ContactData> before = app.contact().list();
         ContactData contact = new ContactData(
                 "Anastasia", "Kutnenko",
                 "Shevchenka 100", "111-111-111",
                 "0923456789", "222-222-222",
                 "333-333-333", "anastasya.kutnenko+1@gmail.com",
                 "anastasya.kutnenko+2@gmail.com", "anastasya.kutnenko+3@gmail.com");
-        app.getNavigationHelper().goToContactCreationPage();
-        app.getContactsHelper().createContact(contact);
-        app.getNavigationHelper().goToHomePage();
-        List<ContactData> after = app.getContactsHelper().getContactList();
+        app.goTo().contactCreationPage();
+        app.contact().create(contact);
+        app.goTo().homePage();
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() + 1);
         contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         before.add(contact);

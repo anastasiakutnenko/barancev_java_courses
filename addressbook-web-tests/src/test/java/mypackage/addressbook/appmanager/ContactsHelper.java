@@ -53,12 +53,12 @@ public class ContactsHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         fillContactCreationForm(contact);
         submitContactCreationForm();
     }
 
-    public void modifyContact(ContactData contact, int index) {
+    public void modify(ContactData contact, int index) {
         selectContact(index);
         clickEditIcon();
         fillContactCreationForm(contact);
@@ -66,11 +66,11 @@ public class ContactsHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void deleteContact(int index) {
+    public void delete(int index) {
         selectContact(index);
         deleteContact();
         getNavigationHelper.acceptBrowserAlert();
-        getNavigationHelper.goToHomePage();
+        getNavigationHelper.homePage();
     }
 
     public boolean isThereAContact() {
@@ -81,7 +81,7 @@ public class ContactsHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> row = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
         List<WebElement> cell = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']/td")));
