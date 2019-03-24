@@ -14,6 +14,8 @@ public class ContactsHelper extends HelperBase {
         super(wd);
     }
 
+    public NavigationHelper getNavigationHelper = new NavigationHelper(wd);
+
     public void submitContactCreationForm() {
         click(By.xpath("//input[@name='submit']"));
     }
@@ -54,6 +56,21 @@ public class ContactsHelper extends HelperBase {
     public void createContact(ContactData contact) {
         fillContactCreationForm(contact);
         submitContactCreationForm();
+    }
+
+    public void modifyContact(ContactData contact, int index) {
+        selectContact(index);
+        clickEditIcon();
+        fillContactCreationForm(contact);
+        clickUpdateContactButton();
+        returnToHomePage();
+    }
+
+    public void deleteContact(int index) {
+        selectContact(index);
+        deleteContact();
+        getNavigationHelper.acceptBrowserAlert();
+        getNavigationHelper.goToHomePage();
     }
 
     public boolean isThereAContact() {
