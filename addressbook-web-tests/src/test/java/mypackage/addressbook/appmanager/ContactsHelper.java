@@ -92,14 +92,22 @@ public class ContactsHelper extends HelperBase {
                 String[] emails = cell.get(4).getText().split("\n");
                 String[] phones = cell.get(5).getText().split("\n");
                 int id = Integer.parseInt(row.get(i).findElement(By.tagName("input")).getAttribute("value"));
-                ContactData contact = new ContactData(id, firstName, lastName,
-                        null, null,
-                        null, null,
-                        null, null, null,null);
+                ContactData contact = new ContactData()
+                        .withId(id)
+                        .withFirstName(firstName)
+                        .withLastName(lastName);
 
-                ContactData contactFullInfo = new ContactData(id, firstName, lastName,
-                        address, phones[0], phones[1], phones[2],
-                        null, emails[0], emails[1], emails[2]);
+                ContactData contactFullInfo = new ContactData()
+                        .withId(id)
+                        .withFirstName(firstName)
+                        .withLastName(lastName)
+                        .withAddress(address)
+                        .withHomePhone(phones[0])
+                        .withMobilePhone(phones[1])
+                        .withWorkPhone(phones[2])
+                        .withEmail1(emails[0])
+                        .withEmail2(emails[1])
+                        .withEmail3(emails[2]);
                 contacts.add(contact);
             }
         return contacts;
