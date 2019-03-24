@@ -71,11 +71,18 @@ public class ContactsHelper extends HelperBase {
         for(int i = 0; i < row.size(); i++) {
                 String lastName = cell.get(1).getText();
                 String firstName = cell.get(2).getText();
+                String address = cell.get(3).getText();
+                String[] emails = cell.get(4).getText().split("\n");
+                String[] phones = cell.get(5).getText().split("\n");
                 int id = Integer.parseInt(row.get(i).findElement(By.tagName("input")).getAttribute("value"));
                 ContactData contact = new ContactData(id, firstName, lastName,
                         null, null,
                         null, null,
                         null, null, null,null);
+
+                ContactData contactFullInfo = new ContactData(id, firstName, lastName,
+                        address, phones[0], phones[1], phones[2],
+                        null, emails[0], emails[1], emails[2]);
                 contacts.add(contact);
             }
         return contacts;
