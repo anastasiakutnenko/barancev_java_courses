@@ -107,11 +107,6 @@ public class ContactsHelper extends HelperBase {
             ContactData contact = new ContactData()
                     .withId(id)
                     .withFirstName(firstName)
-                    .withLastName(lastName);
-
-            ContactData contactFullInfo = new ContactData()
-                    .withId(id)
-                    .withFirstName(firstName)
                     .withLastName(lastName)
                     .withAddress(address)
                     .withHomePhone(phones[0])
@@ -123,5 +118,19 @@ public class ContactsHelper extends HelperBase {
             contactCache.add(contact);
         }
         return contactCache;
+    }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        selectContactById(contact.getId());
+        clickEditIcon();
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstName(firstName)
+                .withLastName(lastName).withHomePhone(homePhone).withMobilePhone(mobilePhone)
+                .withWorkPhone(workPhone);
     }
 }
