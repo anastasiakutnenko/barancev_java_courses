@@ -19,9 +19,7 @@ public class AddNewContactTests extends TestBase {
                 .withFax("333-333-333").withEmail1("anastasya.kutnenko+1@gmail.com")
                 .withEmail2("anastasya.kutnenko+2@gmail.com")
                 .withEmail3("anastasya.kutnenko+3@gmail.com");
-        app.goTo().contactCreationPage();
         app.contact().create(contact);
-        app.goTo().homePage();
         Contacts after = app.contact().all();
         assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, equalTo(

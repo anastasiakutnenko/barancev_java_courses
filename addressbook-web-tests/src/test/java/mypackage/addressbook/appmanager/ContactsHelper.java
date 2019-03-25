@@ -7,9 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactsHelper extends HelperBase {
 
@@ -17,7 +15,7 @@ public class ContactsHelper extends HelperBase {
         super(wd);
     }
 
-    public NavigationHelper getNavigationHelper = new NavigationHelper(wd);
+    public NavigationHelper goTo = new NavigationHelper(wd);
 
     public void submitContactCreationForm() {
         click(By.xpath("//input[@name='submit']"));
@@ -57,8 +55,12 @@ public class ContactsHelper extends HelperBase {
     }
 
     public void create(ContactData contact) {
+        goTo.contactCreationPage();
         fillContactCreationForm(contact);
         submitContactCreationForm();
+        contactCache = null;
+        goTo.homePage();
+
     }
 
     public void modify(ContactData contact) {
@@ -66,14 +68,16 @@ public class ContactsHelper extends HelperBase {
         clickEditIcon();
         fillContactCreationForm(contact);
         clickUpdateContactButton();
+        contactCache = null;
         returnToHomePage();
     }
 
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         deleteContact();
-        getNavigationHelper.acceptBrowserAlert();
-        getNavigationHelper.homePage();
+        goTo.acceptBrowserAlert();
+        contactCache = null;
+        goTo.homePage();
     }
 
     public boolean isThereAContact() {
@@ -84,8 +88,13 @@ public class ContactsHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> row = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
         List<WebElement> cell = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']/td")));
         for(int i = 0; i < row.size(); i++) {
@@ -111,8 +120,8 @@ public class ContactsHelper extends HelperBase {
                     .withEmail1(emails[0])
                     .withEmail2(emails[1])
                     .withEmail3(emails[2]);
-            contacts.add(contact);
+            contactCache.add(contact);
         }
-        return contacts;
+        return contactCache;
     }
 }
