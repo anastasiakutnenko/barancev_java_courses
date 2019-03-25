@@ -1,6 +1,7 @@
 package mypackage.addressbook.appmanager;
 
 import mypackage.addressbook.model.ContactData;
+import mypackage.addressbook.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -83,8 +84,8 @@ public class ContactsHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> row = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
         List<WebElement> cell = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']/td")));
         for(int i = 0; i < row.size(); i++) {
