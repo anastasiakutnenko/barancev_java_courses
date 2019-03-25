@@ -84,7 +84,7 @@ public class ContactsHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public int countContacts() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 
