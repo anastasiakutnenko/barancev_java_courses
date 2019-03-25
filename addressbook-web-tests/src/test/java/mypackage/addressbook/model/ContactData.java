@@ -11,6 +11,8 @@ public class ContactData {
     private String mobilePhone;
     private String workPhone;
     private String fax;
+    private String allPhones;
+    private String allEmails;
 
     @Override
     public boolean equals(Object o) {
@@ -86,7 +88,19 @@ public class ContactData {
         return this;
     }
 
-    public int getId() { return id; }
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
+    public ContactData withAllEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -126,6 +140,14 @@ public class ContactData {
 
     public String getEmail3() {
         return email3;
+    }
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public String getAllEmails() {
+        return allEmails;
     }
 
     @Override
