@@ -95,15 +95,16 @@ public class ContactsHelper extends HelperBase {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
-        List<WebElement> row = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
-        List<WebElement> cell = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']/td")));
-        for(int i = 0; i < row.size(); i++) {
+        List<WebElement> rows = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
+        for(int i = 1; i <= rows.size(); i++) {
+            WebElement row = wd.findElement(By.xpath("//tr[@name = 'entry']["+ i +"]"));
+            List<WebElement> cell = new ArrayList<>(row.findElements(By.xpath("./td")));
             String lastName = cell.get(1).getText();
             String firstName = cell.get(2).getText();
             String address = cell.get(3).getText();
             String allEmails = cell.get(4).getText();
             String allPhones = cell.get(5).getText();
-            int id = Integer.parseInt(row.get(i).findElement(By.tagName("input")).getAttribute("value"));
+            int id = Integer.parseInt(cell.get(0).findElement(By.tagName("input")).getAttribute("value"));
             ContactData contact = new ContactData()
                     .withId(id)
                     .withFirstName(firstName)

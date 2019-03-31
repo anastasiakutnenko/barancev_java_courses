@@ -1,28 +1,43 @@
 package mypackage.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import mypackage.addressbook.model.ContactData;
 import mypackage.addressbook.model.Contacts;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddNewContactTests extends TestBase {
 
-    @Test
-    public void addNewContactTest() throws Exception {
+    @DataProvider
+    public Iterator<Object[]> validContactsFromJson() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader
+                (new File("src/test/resources/contacts.json")));
+        String json = "";
+        String line = reader.readLine();
+        while (line != null) {
+            json += line;
+            line = reader.readLine();
+        }
+        Gson gson = new Gson();
+        List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+        return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    }
+
+    @Test(dataProvider = "validContactsFromJson")
+    public void addNewContactTest(ContactData contact) throws Exception {
         Contacts before = app.contact().all();
-        File photo = new File("src/test/resources/avatar.png");
-        ContactData contact = new ContactData()
-                .withFirstName("Anastasia").withLastName("Kutnenko")
-                .withAddress("Shevchenka 100").withHomePhone("111-111-111")
-                .withMobilePhone("0923456789").withWorkPhone("222-222-222")
-                .withFax("333-333-333").withEmail1("anastasya.kutnenko+1@gmail.com")
-                .withEmail2("anastasya.kutnenko+2@gmail.com")
-                .withEmail3("anastasya.kutnenko+3@gmail.com")
-                .withPhoto(photo);
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().all();
