@@ -1,18 +1,36 @@
 package mypackage.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contacts")
 public class ContactData {
+    @XStreamOmitField
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstName;
+    @Expose
     private String lastName;
+    @Expose
     private String address;
+    @Expose
     private String homePhone;
+    @Expose
     private String mobilePhone;
+    @Expose
     private String workPhone;
+    @Expose
     private String fax;
+    @Expose
     private String allPhones;
+    @Expose
     private String allEmails;
+    @Expose
+    private File photo;
 
     @Override
     public boolean equals(Object o) {
@@ -28,9 +46,11 @@ public class ContactData {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName);
     }
-
+    @Expose
     private String email1;
+    @Expose
     private String email2;
+    @Expose
     private String email3;
 
     public ContactData withId(int id) {
@@ -98,6 +118,11 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
     public int getId() {
         return id;
     }
@@ -148,6 +173,10 @@ public class ContactData {
 
     public String getAllEmails() {
         return allEmails;
+    }
+
+    public File getPhoto() {
+        return photo;
     }
 
     @Override
