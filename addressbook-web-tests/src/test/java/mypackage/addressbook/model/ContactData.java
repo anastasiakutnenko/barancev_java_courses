@@ -3,34 +3,57 @@ package mypackage.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
-
+@Entity
+@Table(name = "addressbook")
 @XStreamAlias("contacts")
 public class ContactData {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstName;
     @Expose
+    @Column(name = "lastname")
     private String lastName;
     @Expose
+    @Column(name = "address")
+    @Type(type="text")
     private String address;
     @Expose
+    @Column(name = "home")
+    @Type(type="text")
     private String homePhone;
     @Expose
+    @Column(name = "mobile")
+    @Type(type="text")
     private String mobilePhone;
     @Expose
+    @Column(name = "work")
+    @Type(type="text")
     private String workPhone;
     @Expose
+    @Column(name="fax")
+    @Type(type="text")
     private String fax;
     @Expose
+    @Transient
     private String allPhones;
     @Expose
+    @Transient
     private String allEmails;
     @Expose
-    private File photo;
+    @Column(name = "photo")
+    @Type(type="text")
+    private String photo;
+    @Transient
+    private String group;
 
     @Override
     public boolean equals(Object o) {
@@ -47,10 +70,13 @@ public class ContactData {
         return Objects.hash(id, firstName, lastName);
     }
     @Expose
+    @Transient
     private String email1;
     @Expose
+    @Transient
     private String email2;
     @Expose
+    @Transient
     private String email3;
 
     public ContactData withId(int id) {
@@ -119,7 +145,7 @@ public class ContactData {
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -176,7 +202,7 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     @Override
