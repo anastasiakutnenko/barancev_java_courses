@@ -49,8 +49,8 @@ public class ContactData {
     @Transient
     private String allEmails;
     @Expose
-    @Column(name = "photo")
     @Type(type="text")
+    @Column(name = "photo")
     private String photo;
     @Transient
     private String group;
@@ -201,17 +201,29 @@ public class ContactData {
         return allEmails;
     }
 
-    public File getPhoto() {
-        return new File(photo);
-    }
-
     @Override
     public String toString() {
         return "ContactData{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", fax='" + fax + '\'' +
+                ", allPhones='" + allPhones + '\'' +
+                ", allEmails='" + allEmails + '\'' +
+                ", photo='" + photo + '\'' +
+                ", group='" + group + '\'' +
+                ", email1='" + email1 + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
                 '}';
+    }
+
+    public File getPhoto() {
+        return new File(photo);
     }
 
 }

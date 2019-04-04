@@ -9,7 +9,8 @@
     "fax": "444-444-444-0",
     "email1": "email1+0@example.com",
     "email2": "email2+0@example.com",
-    "email3": "email3+0@example.com"
+    "email3": "email3+0@example.com",
+    "photo": "src/test/resources/avatar.png"
   },
   {
     "firstName": "TestName 1",
@@ -21,7 +22,8 @@
     "fax": "444-444-444-1",
     "email1": "email1+1@example.com",
     "email2": "email2+1@example.com",
-    "email3": "email3+1@example.com"
+    "email3": "email3+1@example.com",
+    "photo": "src/test/resources/avatar.png"
   },
   {
     "firstName": "TestName 2",
@@ -33,6 +35,7 @@
     "fax": "444-444-444-2",
     "email1": "email1+2@example.com",
     "email2": "email2+2@example.com",
-    "email3": "email3+2@example.com"
+    "email3": "email3+2@example.com",
+    "photo": "src/test/resources/avatar.png"
   }
 ]
