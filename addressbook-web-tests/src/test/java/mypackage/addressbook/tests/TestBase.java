@@ -7,13 +7,14 @@ import mypackage.addressbook.model.GroupData;
 import mypackage.addressbook.model.Groups;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 public class TestBase {
+    protected SessionFactory sessionFactory;
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
     protected final static ApplicationManager app
@@ -67,6 +69,23 @@ public class TestBase {
             .withLastName(g.getLastName()).withEmail1(g.getEmail1()).withEmail2(g.getEmail2())
             .withEmail3(g.getEmail3()).withHomePhone(g.getHomePhone()).withMobilePhone(g.getMobilePhone())
             .withWorkPhone(g.getWorkPhone())).collect(Collectors.toSet())));
+        }
+    }
+
+    @BeforeClass
+    protected void setUpDb() throws Exception {
+        // A SessionFactory is set up once for an application!
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        try {
+            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
+            // so destroy it manually.
+            StandardServiceRegistryBuilder.destroy( registry );
         }
     }
 }

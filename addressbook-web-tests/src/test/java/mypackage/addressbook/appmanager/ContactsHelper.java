@@ -2,9 +2,11 @@ package mypackage.addressbook.appmanager;
 
 import mypackage.addressbook.model.ContactData;
 import mypackage.addressbook.model.Contacts;
+import mypackage.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +98,8 @@ public class ContactsHelper extends HelperBase {
         }
         contactCache = new Contacts();
         List<WebElement> rows = new ArrayList<>(wd.findElements(By.xpath("//tr[@name = 'entry']")));
-        for(int i = 1; i <= rows.size(); i++) {
-            WebElement row = wd.findElement(By.xpath("//tr[@name = 'entry']["+ i +"]"));
+        for (int i = 1; i <= rows.size(); i++) {
+            WebElement row = wd.findElement(By.xpath("//tr[@name = 'entry'][" + i + "]"));
             List<WebElement> cell = new ArrayList<>(row.findElements(By.xpath("./td")));
             String lastName = cell.get(1).getText();
             String firstName = cell.get(2).getText();
@@ -136,5 +138,32 @@ public class ContactsHelper extends HelperBase {
                 .withEmail1(email1)
                 .withEmail2(email2)
                 .withEmail3(email3);
+    }
+
+    public List<GroupData> getGroupList() {
+        List<WebElement> groupList = new ArrayList<WebElement>(
+                wd.findElements(By.xpath("//select[@name = 'to_group']/option")));
+        List<GroupData> groups = new ArrayList<GroupData>();
+        for (WebElement group : groupList) {
+            String name = group.getText();
+            int id = Integer.parseInt(group.getAttribute("value"));
+            GroupData group1 = new GroupData().withId(id).withName(name);
+            groups.add(group1);
+        }
+        return groups;
+    }
+
+    public void addContactToGroup(String groupName, int contactId) {
+        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+        wd.findElement(By.name("to_group")).click();
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void deleteContactFromGroup(String groupName, int contactId) {
+        wd.findElement(By.name("group")).click();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
+        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+        wd.findElement(By.name("remove")).click();
     }
 }
