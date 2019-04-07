@@ -8,6 +8,8 @@
             <class name="mypackage.addressbook.tests.ContactDeletionTests" />
             <class name="mypackage.addressbook.tests.ContactEmailTests" />
             <class name="mypackage.addressbook.tests.ContactPhoneTests" />
+            <class name="mypackage.addressbook.tests.AddContactToGroupTests" />
+            <class name="mypackage.addressbook.tests.DeleteContactFromGroupTests" />
         </classes>
     </test>
 </suite>
