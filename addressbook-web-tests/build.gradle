@@ -16,10 +16,6 @@ dependencies {
     compile("org.hibernate:hibernate-core:5.4.2.Final")
 }
 
-test {
-    useTestNG()
-}
-
 task testGroups(type: Test) {
     useTestNG {
         suites "src/test/resources/testng-groups.xml"
