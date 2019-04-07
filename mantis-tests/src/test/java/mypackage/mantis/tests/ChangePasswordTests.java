@@ -1,6 +1,7 @@
 package mypackage.mantis.tests;
 
 import mypackage.mantis.model.MailMessage;
+import mypackage.mantis.model.UserData;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -12,21 +13,23 @@ import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
-public class RegistrationTests extends TestBase{
+public class ChangePasswordTests extends TestBase{
     @BeforeMethod
     public void startMailServer() {
         app.mail().start();
     }
+
     @Test
-    public void testSignUp() throws IOException, MessagingException {
-        String email = "user91@localhost.localdomain";
-        String user = "user198";
-        String password = "password";
-        app.registration().start(user, email);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 50000);
-        String confirmationLink = findConfirmationLink(mailMessages, email);
-        app.registration().finish(confirmationLink, password);
-        assertTrue(app.newSession().login(user, password));
+    public void testPasswordChange() throws IOException, MessagingException, InterruptedException {
+        UserData selectedUser = app.db().users().iterator().next();
+        String newPassword = "newpass1";
+        app.login().loginFromUI();
+        app.goTo().manageUsersPage();
+        app.user().resetPassword(selectedUser.getId());
+        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+        String confirmationLink = findConfirmationLink(mailMessages, selectedUser.getEmail());
+        app.registration().finish(confirmationLink, newPassword);
+        assertTrue(app.newSession().login(selectedUser.getUsername(), newPassword));
 
     }
 
