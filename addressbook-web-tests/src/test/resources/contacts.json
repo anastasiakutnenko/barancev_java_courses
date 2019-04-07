@@ -11,31 +11,5 @@
     "email2": "email2+0@example.com",
     "email3": "email3+0@example.com",
     "photo": "src/test/resources/avatar.png"
-  },
-  {
-    "firstName": "TestName 1",
-    "lastName": "TestLastName 1",
-    "address": "TestAddress 1",
-    "homePhone": "111-111-111-1",
-    "mobilePhone": "222-222-222-1",
-    "workPhone": "333-333-333-1",
-    "fax": "444-444-444-1",
-    "email1": "email1+1@example.com",
-    "email2": "email2+1@example.com",
-    "email3": "email3+1@example.com",
-    "photo": "src/test/resources/avatar.png"
-  },
-  {
-    "firstName": "TestName 2",
-    "lastName": "TestLastName 2",
-    "address": "TestAddress 2",
-    "homePhone": "111-111-111-2",
-    "mobilePhone": "222-222-222-2",
-    "workPhone": "333-333-333-2",
-    "fax": "444-444-444-2",
-    "email1": "email1+2@example.com",
-    "email2": "email2+2@example.com",
-    "email3": "email3+2@example.com",
-    "photo": "src/test/resources/avatar.png"
   }
 ]
