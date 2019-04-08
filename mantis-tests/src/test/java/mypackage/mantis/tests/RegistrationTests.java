@@ -19,8 +19,8 @@ public class RegistrationTests extends TestBase{
     }
     @Test
     public void testSignUp() throws IOException, MessagingException {
-        String email = "user91@localhost.localdomain";
-        String user = "user198";
+        String email = "user91990@localhost.localdomain";
+        String user = "user100098";
         String password = "password";
         app.registration().start(user, email);
         List<MailMessage> mailMessages = app.mail().waitForMail(2, 50000);
