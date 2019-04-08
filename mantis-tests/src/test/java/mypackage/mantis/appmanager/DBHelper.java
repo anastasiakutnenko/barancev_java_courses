@@ -22,7 +22,7 @@ public class DBHelper {
     public List<UserData> users() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<UserData> result = session.createQuery( "from UserData" ).list();
+        List<UserData> result = session.createQuery( "from UserData where access_level=25" ).list();
         for ( UserData user : result ) {
             System.out.println(user);
         }

@@ -47,4 +47,14 @@ public class UserData {
         this.id = id;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
